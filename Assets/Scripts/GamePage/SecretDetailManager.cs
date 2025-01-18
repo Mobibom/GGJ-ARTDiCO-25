@@ -72,6 +72,8 @@ public class SecretDetailManager : MonoBehaviour
         // 0. 禁用按钮点击
         isClickable = false;
 
+        bubbleParentObject.GetComponent<DreamBubbleManager>().SetSizeToZero();
+
         // 启动协程，1秒后恢复按钮点击
         if (enableClickCoroutine != null) StopCoroutine(enableClickCoroutine);
         enableClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
