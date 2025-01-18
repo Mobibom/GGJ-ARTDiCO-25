@@ -19,7 +19,7 @@ public class SecretDetailManager : MonoBehaviour
     public float duration = 1f; // 放大缩小的时间
 
     private Coroutine resizeCoroutine; // 用于存储协程
-    private Coroutine enagleClickCoroutine; // 用于存储协程
+    private Coroutine enableClickCoroutine; // 用于存储协程
     private Coroutine hidePicCoroutine; // 用于存储协程
     private Coroutine showOtherUIElementsCoroutine; // 用于存储协程
 
@@ -36,8 +36,8 @@ public class SecretDetailManager : MonoBehaviour
         // 0. 禁用按钮点击
         isClickable = false;
         // 启动协程，1秒后恢复按钮点击
-        if (enagleClickCoroutine != null) StopCoroutine(enagleClickCoroutine);
-        enagleClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
+        if (enableClickCoroutine != null) StopCoroutine(enableClickCoroutine);
+        enableClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
 
         // 1. 载入新的图片并设置图片大小
         Debug.Log("载入新的图片");
@@ -69,8 +69,8 @@ public class SecretDetailManager : MonoBehaviour
         // 0. 禁用按钮点击
         isClickable = false;
         // 启动协程，1秒后恢复按钮点击
-        if (enagleClickCoroutine != null) StopCoroutine(enagleClickCoroutine);
-        enagleClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
+        if (enableClickCoroutine != null) StopCoroutine(enableClickCoroutine);
+        enableClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
 
         // 1. 逐渐缩小图片
         Debug.Log("逐渐缩小图片");
@@ -89,7 +89,7 @@ public class SecretDetailManager : MonoBehaviour
     }
 
     // 在延迟后恢复按钮点击
-    IEnumerator EnableClickAfterDelay(float delay)
+    private IEnumerator EnableClickAfterDelay(float delay)
     {
         // 等待一秒
         yield return new WaitForSeconds(delay);

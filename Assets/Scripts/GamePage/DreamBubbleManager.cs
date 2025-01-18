@@ -12,7 +12,6 @@ public class DreamBubbleManager : MonoBehaviour
     public float wobbleAmount = 10f;  // 控制晃动幅度
     public float wobbleSpeed = 3f;     // 控制晃动速度
 
-
     private Coroutine coroutineShowBubble; // 用于存储协程
 
     // Start is called before the first frame update
