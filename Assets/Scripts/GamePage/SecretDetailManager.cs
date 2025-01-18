@@ -33,6 +33,8 @@ public class SecretDetailManager : MonoBehaviour
         if (!isClickable) return;
         string buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
 
+        Debug.Log(buttonName);
+
         // 0. 禁用按钮点击
         isClickable = false;
         // 启动协程，1秒后恢复按钮点击

@@ -37,7 +37,7 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void Awake()
     {
-        black.SetActive(false);
+        // black.SetActive(false);
 
         // 将目标气泡中的GreamStory隐藏
         dreamStory.SetActive(false);
@@ -53,6 +53,8 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("OnDrag");
+        
         // 拖动过程中更新 UI 元素的位置, 使其跟随鼠标移动
         rectTransform.position = eventData.position;
     }
@@ -60,6 +62,8 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
     // 处理拖动结束(鼠标抬起)的事件
     public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log("OnEndDrag");
+
         // 判断当前拖动的物体是否放置在目标区域内
         if (IsInTargetArea())
         {
