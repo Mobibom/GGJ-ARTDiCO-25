@@ -14,6 +14,7 @@ public class SecretDetailManager : MonoBehaviour
 
     [Header("需要隐藏的其他UI元素")]
     public List<GameObject> otherUIElements;
+    public GameObject bubbleParentObject;
 
     [Header("放大缩小")]
     public float duration = 1f; // 放大缩小的时间
@@ -70,6 +71,7 @@ public class SecretDetailManager : MonoBehaviour
 
         // 0. 禁用按钮点击
         isClickable = false;
+
         // 启动协程，1秒后恢复按钮点击
         if (enableClickCoroutine != null) StopCoroutine(enableClickCoroutine);
         enableClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
@@ -130,5 +132,6 @@ public class SecretDetailManager : MonoBehaviour
         {
             ui.SetActive(true);
         }
+        bubbleParentObject.GetComponent<DreamBubbleManager>().StartInitBubbles();
     }
 }

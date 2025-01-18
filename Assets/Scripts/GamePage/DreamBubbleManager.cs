@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DreamBubbleManager : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class DreamBubbleManager : MonoBehaviour
     public float scaleUpDuration = 1f; // 气泡放大的时间
     public float wobbleAmount = 10f;  // 控制晃动幅度
     public float wobbleSpeed = 3f;     // 控制晃动速度
+
+    [Header("气泡初始化时禁用线索点击")]
+    public GameObject buttonParentObject;
 
     private Coroutine coroutineShowBubble; // 用于存储协程
 
@@ -26,6 +31,11 @@ public class DreamBubbleManager : MonoBehaviour
         // 进入场景后延迟一秒, 依次显示小孩头顶气泡
         // 当第一个气泡显示完毕后, 依次显示第二个气泡
         // 以此类推, 直到所有气泡显示完毕
+        StartInitBubbles();
+    }
+
+    public void StartInitBubbles()
+    {
         if (coroutineShowBubble != null) StopCoroutine(coroutineShowBubble);
         coroutineShowBubble = StartCoroutine(ShowBubbles());
     }
@@ -45,9 +55,6 @@ public class DreamBubbleManager : MonoBehaviour
 
             // 等待一段时间
             yield return new WaitForSeconds(delayBetweenBubbles);
-
-            // 你可以在这里添加逻辑控制每个气泡的显示或隐藏
-            // 如果需要隐藏气泡，可以使用 bubble.SetActive(false);
         }
     }
 
