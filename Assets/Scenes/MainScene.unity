@@ -435,7 +435,7 @@ MonoBehaviour:
   speed: 1
   scene1: {fileID: 1156990990}
   scene2: {fileID: 2119177500}
-  scene3: {fileID: 0}
+  scene3: {fileID: 4536749796821942216}
   scene4: {fileID: 1178348827}
   scene5: {fileID: 1767188747}
   scene6: {fileID: 60188702}
@@ -1259,7 +1259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1156990991
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4612,9 +4612,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1978021694743108374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: ccac51798bb6d7241b2d05f59629000b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BubbleList:
+  - {fileID: 2411755674914959298}
+  - {fileID: 1417939510329676722}
+  - {fileID: 4501535178403839232}
+  enterSceneDelay: 1
+  delayBetweenBubbles: 0.5
+  scaleUpDuration: 1
+  wobbleAmount: 10
+  wobbleSpeed: 3
 --- !u!224 &7651309466382719822
 RectTransform:
   m_ObjectHideFlags: 0
