@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     [Header("目标区域")]    
-    public RectTransform targetArea; // 目标区域的 RectTransform
+    public GameObject targetBubble; // 目标气泡
     private RectTransform rectTransform; // 拖动目标的 RectTransform
     public float tolerance = 20f; // 容差值
 
@@ -29,6 +29,9 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void Awake()
     {
+        // 将目标气泡中的GreamStory隐藏
+        targetBubble.transform.Find("GreamStory").gameObject.SetActive(false);
+
         // 获取当前物体的 RectTransform 组件
         rectTransform = GetComponent<RectTransform>();
 
@@ -54,10 +57,25 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
             // 如果当前物体的名字不是RightGift，则执行错误逻辑
             if (gameObject.name != "RightGift")
             {
+                BackToOriginPos();
                 WrongGift();
             }
             else
             {
+                // 缓慢移动到目标位置
+                if (moveToTarPosCoroutine != null) StopCoroutine(moveToTarPosCoroutine);
+                moveToTarPosCoroutine = StartCoroutine(
+                    MoveImageInDiffrenParent(rectTransform, rectTransform.position, targetBubble.GetComponent<RectTransform>().position, moveToTarPosTime)
+                    );
+
+                // 物体缓慢消失
+                if (disappearCoroutine != null) StopCoroutine(disappearCoroutine);
+                disappearCoroutine = StartCoroutine(FadeImage(gameObject, 1f, 0f, disappearTime));
+
+                // 延迟后将物体设置为active false
+                if (enableActiveCoroutine != null) StopCoroutine(enableActiveCoroutine);
+                enableActiveCoroutine = StartCoroutine(DisactiveAfterDelay(disappearTime, false));
+
                 RightGift();
             }
         }
@@ -65,7 +83,7 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             // 如果没有放在目标区域，可以选择返回原位或其他处理逻辑
             //Debug.Log("未到目标位置");
-            NonArrival();
+            BackToOriginPos();
         }
     }
 
@@ -75,7 +93,7 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
         // 获取目标区域的世界坐标
         //Rect targetRect = targetArea.rect; // 目标区域的矩形
         Vector3[] worldCorners = new Vector3[4];
-        targetArea.GetWorldCorners(worldCorners); // 获取目标区域四个角的世界坐标
+        targetBubble.GetComponent<RectTransform>().GetWorldCorners(worldCorners); // 获取目标区域四个角的世界坐标
 
         // 计算目标区域的最小和最大世界坐标
         Vector2 areaMin = worldCorners[0]; // 左下角
@@ -90,33 +108,29 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void RightGift()
     {
-        //Debug.Log("Right Gift");
+        // 在main气泡中找到名为GreamStory的子物体
+        GameObject image = targetBubble.transform.Find("GreamStory").gameObject;
+        // 设置图片为active true
+        image.SetActive(true);
 
-        // 缓慢移动到目标位置
-        if (moveToTarPosCoroutine != null) StopCoroutine(moveToTarPosCoroutine);
-        moveToTarPosCoroutine = StartCoroutine(MoveImageInDiffrenParent(rectTransform, rectTransform.position, targetArea.position, moveToTarPosTime));
-
-        // 物体缓慢消失
-        if (disappearCoroutine != null) StopCoroutine(disappearCoroutine);
-        disappearCoroutine = StartCoroutine(FadeImage(gameObject, 1f, 0f, disappearTime));
-
-        // 延迟后将物体设置为active false
-        if (enableActiveCoroutine != null) StopCoroutine(enableActiveCoroutine);
-        enableActiveCoroutine = StartCoroutine(DisactiveAfterDelay(disappearTime,false));
+        // TODO: 固定时间后切换场景
     }
 
     private void WrongGift()
     {
-        //Debug.Log("Wrong Gift");
+        // TODO: UIManager的 complaintUI 中的格子变化, 每错一次就变化一个格子(剩下的逻辑在UIManager中实现)
 
-        // 缓慢移动到原位
-        if (returnCoroutine != null) StopCoroutine(returnCoroutine);
-        returnCoroutine = StartCoroutine(MoveImageInSameParent(rectTransform, rectTransform.localPosition, originPos, returnTime));
+        // 找到挂在有UIManager脚本的物体
+        GameObject uiManager = GameObject.FindObjectOfType<UIManager>().gameObject;
+
+        // 调用UIManager中的 complaintUI 中的格子变化方法
+        uiManager.GetComponent<UIManager>().SubmitWrongGift();
+
+
     }
-    private void NonArrival()
-    {
-        //Debug.Log("Non Arrival");
 
+    private void BackToOriginPos()
+    {
         // 缓慢移动到原位
         if (returnCoroutine != null) StopCoroutine(returnCoroutine);
         returnCoroutine = StartCoroutine(MoveImageInSameParent(rectTransform, rectTransform.localPosition, originPos, returnTime));
