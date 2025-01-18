@@ -78,7 +78,8 @@ public class black : MonoBehaviour
 
     private void page_switch()
     {
-        sceneNow.SetActive(false);
+        if (sceneNow == (scene3 && scene4 && scene5)) Destroy(sceneNow.gameObject);
+        else sceneNow.SetActive(false);
         sceneNext.SetActive(true);
     }
 
@@ -96,16 +97,58 @@ public class black : MonoBehaviour
         start_turn_black = true;
     }
 
-    public void SeventoOne()
+    public void ThreetoFour()
     {
-        sceneNow = scene7;
-        sceneNext = scene1;
+        sceneNow = scene3;
+        sceneNext = scene4;
+        start_turn_black = true;
+    }
+
+    public void ThreetoSeven()
+    {
+        sceneNow = scene3;
+        sceneNext = scene7;
+        start_turn_black = true;
+    }
+
+    public void FourtoFive()
+    {
+        sceneNow = scene4;
+        sceneNext = scene5;
+        start_turn_black = true;
+    }
+
+    public void FourtoSeven()
+    {
+        sceneNow = scene4;
+        sceneNext = scene7;
+        start_turn_black = true;
+    }
+
+    public void FivetoSix()
+    {
+        sceneNow = scene5;
+        sceneNext = scene6;
+        start_turn_black = true;
+    }
+
+    public void FivetoSeven()
+    {
+        sceneNow = scene5;
+        sceneNext = scene7;
         start_turn_black = true;
     }
 
     public void SixtoOne()
     {
         sceneNow = scene6;
+        sceneNext = scene1;
+        start_turn_black = true;
+    }
+
+    public void SeventoOne()
+    {
+        sceneNow = scene7;
         sceneNext = scene1;
         start_turn_black = true;
     }
