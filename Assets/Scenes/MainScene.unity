@@ -2091,7 +2091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1156990991
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4710,7 +4710,6 @@ MonoBehaviour:
   scaleUpDuration: 1
   wobbleAmount: 10
   wobbleSpeed: 3
-  buttonParentObject: {fileID: 1158874167828703714}
 --- !u!114 &1682803458013843390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4732,7 +4731,6 @@ MonoBehaviour:
   scaleUpDuration: 1
   wobbleAmount: 10
   wobbleSpeed: 3
-  buttonParentObject: {fileID: 1158874167118834125}
 --- !u!114 &1682803458566461518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4754,7 +4752,6 @@ MonoBehaviour:
   scaleUpDuration: 1
   wobbleAmount: 10
   wobbleSpeed: 3
-  buttonParentObject: {fileID: 1158874166564191805}
 --- !u!114 &1722761979764239252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6792,7 +6789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4131318790397804056
 MonoBehaviour:
   m_ObjectHideFlags: 0
