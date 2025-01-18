@@ -6,8 +6,13 @@ using UnityEngine.EventSystems;
 
 public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+    [Header("游戏玩法")]
+    public int currBoy = 1;
+    public GameObject black; // 关卡切换黑幕(与下一关控制有关)
+
     [Header("目标区域")]    
     public GameObject targetBubble; // 目标气泡
+    public GameObject dreamStory; // 梦境故事
     private RectTransform rectTransform; // 拖动目标的 RectTransform
     public float tolerance = 20f; // 容差值
 
@@ -17,20 +22,25 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
     [Header("拖动参数")]
     public float returnTime = 1f; // 返回原位的时间
     public float moveToTarPosTime = 0.5f; // 移动到目标位置的时间
+    public float appearTime = 1f; // 出现的时间
     public float disappearTime = 1f; // 消失的时间
 
     private Coroutine returnCoroutine; // 用于存储协程
     private Coroutine moveToTarPosCoroutine; // 用于存储协程
     private Coroutine disappearCoroutine; // 用于存储协程
+    private Coroutine appearCoroutine; // 用于存储协程
     private Coroutine enableActiveCoroutine; // 用于存储协程
+    private Coroutine switchSceneCoroutine; // 用于存储协程
 
     // 触发的方法
     public delegate void OnDropHandler(); // 定义委托
 
     private void Awake()
     {
+        black.SetActive(false);
+
         // 将目标气泡中的GreamStory隐藏
-        targetBubble.transform.Find("GreamStory").gameObject.SetActive(false);
+        dreamStory.SetActive(false);
 
         // 获取当前物体的 RectTransform 组件
         rectTransform = GetComponent<RectTransform>();
@@ -38,7 +48,7 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
         // 保存初始位置
         originPos = rectTransform.localPosition;
 
-        Debug.Log("originPos: " + originPos);
+        //Debug.Log("originPos: " + originPos);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -62,6 +72,9 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
             }
             else
             {
+
+                RightGift();
+
                 // 缓慢移动到目标位置
                 if (moveToTarPosCoroutine != null) StopCoroutine(moveToTarPosCoroutine);
                 moveToTarPosCoroutine = StartCoroutine(
@@ -74,9 +87,8 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 
                 // 延迟后将物体设置为active false
                 if (enableActiveCoroutine != null) StopCoroutine(enableActiveCoroutine);
-                enableActiveCoroutine = StartCoroutine(DisactiveAfterDelay(disappearTime, false));
+                enableActiveCoroutine = StartCoroutine(DisactiveAfterDelay(10 * disappearTime, false));
 
-                RightGift();
             }
         }
         else
@@ -109,11 +121,35 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
     private void RightGift()
     {
         // 在main气泡中找到名为GreamStory的子物体
-        GameObject image = targetBubble.transform.Find("GreamStory").gameObject;
-        // 设置图片为active true
-        image.SetActive(true);
+        GameObject image = dreamStory;
+
+        image.GetComponent<CanvasGroup>().alpha = 0f; // 设置透明度为0
+        image.SetActive(true); // 设置为active true
+
+        // 物体缓慢出现
+        if (appearCoroutine != null) StopCoroutine(appearCoroutine);
+        appearCoroutine = StartCoroutine(FadeImage(image, 0f, 1f, appearTime));
 
         // TODO: 固定时间后切换场景
+        if (switchSceneCoroutine != null) StopCoroutine(switchSceneCoroutine);
+        switchSceneCoroutine = StartCoroutine(SwitchSceneWithDelay(2f));
+    }
+
+    // 延迟切换场景
+    private IEnumerator SwitchSceneWithDelay(float delay)
+    {
+        Debug.Log("SwitchSceneWithDelay");
+        yield return new WaitForSeconds(delay);
+
+        black.SetActive(true);
+        if (currBoy == 1)
+            black.SendMessage("ThreetoFour");
+        else if (currBoy == 2)
+            black.SendMessage("FourtoFive");
+        else if (currBoy == 3)
+            black.SendMessage("FivetoSix");
+
+        Debug.Log("SwitchSceneWithDelayEnd");
     }
 
     private void WrongGift()
@@ -122,6 +158,11 @@ public class GiftDragManager : MonoBehaviour, IDragHandler, IEndDragHandler
 
         // 找到挂在有UIManager脚本的物体
         GameObject uiManager = GameObject.FindObjectOfType<UIManager>().gameObject;
+
+        if (uiManager == null)
+        {
+            Debug.LogError("Can't find UIManager in the scene!");
+        }
 
         // 调用UIManager中的 complaintUI 中的格子变化方法
         uiManager.GetComponent<UIManager>().SubmitWrongGift();

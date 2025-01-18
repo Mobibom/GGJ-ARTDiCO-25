@@ -40,24 +40,24 @@ public class SecretDetailManager : MonoBehaviour
         enableClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
 
         // 1. 载入新的图片并设置图片大小
-        Debug.Log("载入新的图片");
+        // Debug.Log("载入新的图片");
         showSecretsDetailImage.sprite = Resources.Load<Sprite>("Sprites/" + buttonName);
-        //Debug.Log(showSecretsDetailImage.sprite);
+        // Debug.Log(showSecretsDetailImage.sprite);
         showSecretsDetailImage.rectTransform.sizeDelta = minSize;
 
         // 2. 隐藏场景里的其他UI元素
-        Debug.Log("隐藏场景里的其他UI元素");
+        // Debug.Log("隐藏场景里的其他UI元素");
         foreach (GameObject ui in otherUIElements)
         {
             ui.SetActive(false);
         }
 
         // 3. 显示ShowSecretsDetail图片(可选: 渐变显示)
-        Debug.Log("显示ShowSecretsDetail图片");
+        // Debug.Log("显示ShowSecretsDetail图片");
         showSecretsDetailImage.gameObject.SetActive(true);
 
         // 4. 逐渐放大图片到maxSize的大小
-        Debug.Log("逐渐放大图片"); 
+        // Debug.Log("逐渐放大图片"); 
         if (resizeCoroutine != null) StopCoroutine(resizeCoroutine);
         resizeCoroutine = StartCoroutine(ResizeImage(showSecretsDetailImage.rectTransform, minSize, maxSize, duration));
     }
@@ -73,17 +73,17 @@ public class SecretDetailManager : MonoBehaviour
         enableClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
 
         // 1. 逐渐缩小图片
-        Debug.Log("逐渐缩小图片");
+        // Debug.Log("逐渐缩小图片");
         if (resizeCoroutine != null) StopCoroutine(resizeCoroutine);
         resizeCoroutine = StartCoroutine(ResizeImage(showSecretsDetailImage.rectTransform, maxSize, minSize, duration));
 
         // 2. 延迟隐藏ShowSecretsDetail图片
-        Debug.Log("隐藏ShowSecretsDetail图片");
+        // Debug.Log("隐藏ShowSecretsDetail图片");
         if (hidePicCoroutine != null) StopCoroutine(hidePicCoroutine);
         hidePicCoroutine = StartCoroutine(HideWithDelay(duration));
 
         // 3. 显示场景里的其他UI元素
-        Debug.Log("显示场景里的其他UI元素");
+        // Debug.Log("显示场景里的其他UI元素");
         if (showOtherUIElementsCoroutine != null) StopCoroutine(showOtherUIElementsCoroutine);
         showOtherUIElementsCoroutine = StartCoroutine(ShowOtherUIElementsWithDelay(duration));
     }
@@ -96,7 +96,7 @@ public class SecretDetailManager : MonoBehaviour
 
         // 恢复按钮点击操作
         isClickable = true;
-        Debug.Log("恢复按钮点击");
+        // Debug.Log("恢复按钮点击");
     }
 
     // 协程控制大小变化(参数: 目标RectTransform, 起始大小, 目标大小, 持续时间)
