@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,26 +9,40 @@ public class SecretDetailManager : MonoBehaviour
     [Header("图片参数")]
     public Image showSecretsDetailImage;
     public Vector2 maxSize = new(1920, 1200);
-    public Vector2 minSize = new(192, 120);
+    public Vector2 minSize = new(0, 0);
+    public bool isClickable = true;
 
     [Header("需要隐藏的其他UI元素")]
     public List<GameObject> otherUIElements;
 
     [Header("放大缩小")]
     public float duration = 1f; // 放大缩小的时间
+
     private Coroutine resizeCoroutine; // 用于存储协程
+    private Coroutine enagleClickCoroutine; // 用于存储协程
+    private Coroutine hidePicCoroutine; // 用于存储协程
+    private Coroutine showOtherUIElementsCoroutine; // 用于存储协程
 
     private void Start()
     {
+        // 确保线索详情图片是隐藏的
         showSecretsDetailImage.gameObject.SetActive(false);
     }
     public void ShowPicSprite()
     {
+        if (!isClickable) return;
         string buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
+
+        // 0. 禁用按钮点击
+        isClickable = false;
+        // 启动协程，1秒后恢复按钮点击
+        if (enagleClickCoroutine != null) StopCoroutine(enagleClickCoroutine);
+        enagleClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
 
         // 1. 载入新的图片并设置图片大小
         Debug.Log("载入新的图片");
-        showSecretsDetailImage.sprite = Resources.Load<Sprite>(buttonName);
+        showSecretsDetailImage.sprite = Resources.Load<Sprite>("Sprites/" + buttonName);
+        //Debug.Log(showSecretsDetailImage.sprite);
         showSecretsDetailImage.rectTransform.sizeDelta = minSize;
 
         // 2. 隐藏场景里的其他UI元素
@@ -49,21 +64,39 @@ public class SecretDetailManager : MonoBehaviour
 
     public void HidePicSprite()
     {
+        if (!isClickable) return;
+
+        // 0. 禁用按钮点击
+        isClickable = false;
+        // 启动协程，1秒后恢复按钮点击
+        if (enagleClickCoroutine != null) StopCoroutine(enagleClickCoroutine);
+        enagleClickCoroutine = StartCoroutine(EnableClickAfterDelay(duration));
+
         // 1. 逐渐缩小图片
-        Debug.Log("逐渐缩小图片"); 
+        Debug.Log("逐渐缩小图片");
         if (resizeCoroutine != null) StopCoroutine(resizeCoroutine);
         resizeCoroutine = StartCoroutine(ResizeImage(showSecretsDetailImage.rectTransform, maxSize, minSize, duration));
 
         // 2. 延迟隐藏ShowSecretsDetail图片
         Debug.Log("隐藏ShowSecretsDetail图片");
-        StartCoroutine(HideWithDelay(duration));
+        if (hidePicCoroutine != null) StopCoroutine(hidePicCoroutine);
+        hidePicCoroutine = StartCoroutine(HideWithDelay(duration));
 
         // 3. 显示场景里的其他UI元素
         Debug.Log("显示场景里的其他UI元素");
-        foreach (GameObject ui in otherUIElements)
-        {
-            ui.SetActive(true);
-        }
+        if (showOtherUIElementsCoroutine != null) StopCoroutine(showOtherUIElementsCoroutine);
+        showOtherUIElementsCoroutine = StartCoroutine(ShowOtherUIElementsWithDelay(duration));
+    }
+
+    // 在延迟后恢复按钮点击
+    IEnumerator EnableClickAfterDelay(float delay)
+    {
+        // 等待一秒
+        yield return new WaitForSeconds(delay);
+
+        // 恢复按钮点击操作
+        isClickable = true;
+        Debug.Log("恢复按钮点击");
     }
 
     // 协程控制大小变化(参数: 目标RectTransform, 起始大小, 目标大小, 持续时间)
@@ -85,5 +118,15 @@ public class SecretDetailManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         showSecretsDetailImage.gameObject.SetActive(false);
+    }
+
+    // 延迟显示场景里的其他UI元素
+    private IEnumerator ShowOtherUIElementsWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        foreach (GameObject ui in otherUIElements)
+        {
+            ui.SetActive(true);
+        }
     }
 }
