@@ -21,17 +21,18 @@ public class winScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float rate = Screen.width / 2560f;
         if (size_now > 0.2f)
         {
             size_now -= speed * Time.deltaTime;
             background.transform.localScale = new Vector3(size_now, size_now, 1);
-            background.transform.Translate(pos_x * Time.deltaTime * speed*1.25f, pos_y * Time.deltaTime * speed*1.25f, 0);
+            background.transform.Translate(pos_x * Time.deltaTime * speed * 1.25f * rate, pos_y * Time.deltaTime * speed * 1.25f * rate, 0);
         }
         else if (size_now < 0.2f)
         {
             size_now = 0.2f;
             background.transform.localScale = new Vector3(size_now, size_now, 1);
-            background.transform.Translate(pos_x * Time.deltaTime * speed*1.25f, pos_y * Time.deltaTime * speed*1.25f, 0);
+            background.transform.Translate(pos_x * Time.deltaTime * speed * 1.25f * rate, pos_y * Time.deltaTime * speed * 1.25f * rate, 0);
             button.SetActive(true);
         }
     }
