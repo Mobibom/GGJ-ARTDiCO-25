@@ -7,8 +7,9 @@ public class winScene : MonoBehaviour
     public GameObject background;
     private float size_now = 1f;
     private float speed = 0.1f;
-    private int pos_x = 2000;
-    private int pos_y = 2000;
+    // 若要改变小图的位置，则此处左边应该跟着修改，background的posX和posY也要改成对应的负数
+    private int pos_x = 1091;
+    private int pos_y = 1777;
 
     public GameObject button;
     public GameObject black;
