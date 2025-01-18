@@ -78,7 +78,9 @@ public class black : MonoBehaviour
 
     private void page_switch()
     {
-        if (sceneNow == (scene3 && scene4 && scene5)) Destroy(sceneNow.gameObject);
+        if (sceneNow == scene3) Destroy(sceneNow.gameObject);
+        else if (sceneNow == scene4) Destroy(sceneNow.gameObject);
+        else if (sceneNow == scene5) Destroy(sceneNow.gameObject);
         else sceneNow.SetActive(false);
         sceneNext.SetActive(true);
     }
