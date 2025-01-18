@@ -2091,7 +2091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1156990991
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6755,7 +6755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &4060946746097271116
 GameObject:
   m_ObjectHideFlags: 0
@@ -8735,6 +8735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6578903734403709856}
+  - component: {fileID: 6578903734403709857}
   m_Layer: 5
   m_Name: Backpack_Region
   m_TagString: Untagged
@@ -10664,6 +10665,21 @@ RectTransform:
   m_AnchoredPosition: {x: -300, y: 400}
   m_SizeDelta: {x: 600, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6578903734403709857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5608821540668390488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1bc398a8f223341a4e29c0f5276682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageA: {fileID: 6495204595704666434}
+  imageB: {fileID: 4727522831543954106}
+  fadeDuration: 1
 --- !u!224 &6578903734989778000
 RectTransform:
   m_ObjectHideFlags: 0
