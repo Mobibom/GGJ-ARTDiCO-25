@@ -11,7 +11,8 @@ public class animations : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        int screen_width = Screen.width;
+        target_x = target_x * screen_width / 2560;
     }
 
     // Update is called once per frame

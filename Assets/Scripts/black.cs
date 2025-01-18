@@ -31,7 +31,6 @@ public class black : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(sceneNext);
         // 如果sceneNext不为Null,则说明需要进行场景转换
         if (sceneNext != null)
         {
@@ -94,6 +93,20 @@ public class black : MonoBehaviour
     {
         sceneNow = scene2;
         sceneNext = scene3;
+        start_turn_black = true;
+    }
+
+    public void SeventoOne()
+    {
+        sceneNow = scene7;
+        sceneNext = scene1;
+        start_turn_black = true;
+    }
+
+    public void SixtoOne()
+    {
+        sceneNow = scene6;
+        sceneNext = scene1;
         start_turn_black = true;
     }
 }
