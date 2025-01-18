@@ -5,7 +5,7 @@ using UnityEngine;
 public class pageAnimation : MonoBehaviour
 {
     public GameObject black;
-    private float stay_time = 10;
+    private float stay_time = 11;
     // Start is called before the first frame update
     void Start()
     {
