@@ -131,7 +131,8 @@ public class black : MonoBehaviour
     {
         sceneNow = scene5;
         sceneNext = scene6;
-        page_switch();
+        start_turn_black = true;
+        //page_switch();
     }
 
     public void FivetoSeven()
