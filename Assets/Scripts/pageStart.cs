@@ -14,7 +14,7 @@ public class pageStart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape)) { QuitGame(); }
+        // if (Input.GetKeyUp(KeyCode.Escape)) { QuitGame(); }
     }
 
     // ÍË³öÓÎÏ·

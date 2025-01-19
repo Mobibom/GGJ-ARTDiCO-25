@@ -11,6 +11,7 @@ public class winScene : MonoBehaviour
     private int pos_x = 1091;
     private int pos_y = 1777;
 
+    public GameObject button;
     public GameObject black;
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class winScene : MonoBehaviour
             size_now = 0.2f;
             background.transform.localScale = new Vector3(size_now, size_now, 1);
             background.transform.Translate(pos_x * Time.deltaTime * speed * 1.25f * rate, pos_y * Time.deltaTime * speed * 1.25f * rate, 0);
-
+            button.SetActive(true);
         }
     }
 
@@ -41,5 +42,16 @@ public class winScene : MonoBehaviour
     {
         black.SetActive(true);
         black.SendMessage("SixtoOne");
+    }
+
+    public void QuitGame()
+    {
+        // 如果是运行在编辑器中，使用 EditorApplication 来退出
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        // 如果是构建后的游戏，退出应用
+        Application.Quit();
+        #endif
     }
 }
