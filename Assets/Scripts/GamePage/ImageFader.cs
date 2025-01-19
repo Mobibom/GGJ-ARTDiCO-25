@@ -4,9 +4,13 @@ using System.Collections;
 
 public class ImageSequenceFader : MonoBehaviour
 {
+    [Header("背包")]
     public Image imageA;  // 子物体A的Image组件
     public Image imageB;  // 子物体B的Image组件
     public float fadeDuration = 1.0f;  // 渐变的持续时间
+
+    [Header("用于避免播放动画时点击按钮打断动画")]
+    public GameObject coverImage;  // 用于遮挡的Image组件
 
     void Start()
     {
@@ -20,6 +24,9 @@ public class ImageSequenceFader : MonoBehaviour
 
     IEnumerator ShowImagesSequence()
     {
+        // 将coverImage放在最前面，避免点击按钮打断动画
+        coverImage.SetActive(true);
+
         // 等待1秒，保持什么都不显示
         yield return new WaitForSeconds(1f);
 
@@ -40,6 +47,9 @@ public class ImageSequenceFader : MonoBehaviour
         // 显示imageB，渐变显示
         imageB.gameObject.SetActive(true);
         yield return StartCoroutine(FadeImage(imageB, 0f, 1f));
+
+        // 将coverImage取消启用
+        coverImage.SetActive(false);
     }
 
     IEnumerator FadeImage(Image image, float startAlpha, float endAlpha)
