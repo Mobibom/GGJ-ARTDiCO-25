@@ -37,8 +37,13 @@ public class UIManager : MonoBehaviour
     {
         curTime = Time.timeSinceLevelLoad;
 
-        // 更新时间条
-        kpiBarInside.transform.localScale = new Vector3((curTime / maxTime), kpiBarInside.transform.localScale.y, kpiBarInside.transform.localScale.z);
+        // 更新时间条的缩放
+        float newScaleX = curTime / maxTime;
+        kpiBarInside.transform.localScale = new Vector3(newScaleX, kpiBarInside.transform.localScale.y, kpiBarInside.transform.localScale.z);
+
+        // 计算位移，使进度条从左侧开始缩放
+        float offsetX = (1 - newScaleX) * kpiBarInside.GetComponent<RectTransform>().rect.width / 2;
+        kpiBarInside.transform.localPosition = new Vector3(-offsetX, kpiBarInside.transform.localPosition.y, kpiBarInside.transform.localPosition.z);
 
         if (curTime >= maxTime)
         {
