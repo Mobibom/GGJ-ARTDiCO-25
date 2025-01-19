@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < complaintUI.Count; i++)
         {
             // 修改精灵图
-            complaintUI[i].gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ComplaintOff");
+            complaintUI[i].gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ComplaintOff");
         }
 
         curTime = Time.timeSinceLevelLoad;// 单位为秒
@@ -58,9 +59,10 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < complaintTimes; i++)
         {
             // 修改精灵图
-            complaintUI[i].gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/ComplaintOn");
+            complaintUI[i].gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ComplaintOn");
+
         }
-        
+
         if (complaintTimes >= complaintMaxTime)
         {
             GameFailed();
