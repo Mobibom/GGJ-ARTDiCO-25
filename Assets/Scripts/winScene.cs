@@ -11,7 +11,6 @@ public class winScene : MonoBehaviour
     private int pos_x = 1091;
     private int pos_y = 1777;
 
-    public GameObject button;
     public GameObject black;
     // Start is called before the first frame update
     void Start()
@@ -34,7 +33,7 @@ public class winScene : MonoBehaviour
             size_now = 0.2f;
             background.transform.localScale = new Vector3(size_now, size_now, 1);
             background.transform.Translate(pos_x * Time.deltaTime * speed * 1.25f * rate, pos_y * Time.deltaTime * speed * 1.25f * rate, 0);
-            button.SetActive(true);
+
         }
     }
 
